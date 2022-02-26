@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
-use App\ResourceType;
 use App\User;
-use Illuminate\Foundation\Http\FormRequest;
+use App\ResourceType;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Http\FormRequest;
 
 /**
  * Class HelpResourceRequest
@@ -39,7 +40,7 @@ class HelpResourceRequest extends FormRequest
             'phone' => ['required', 'max:18', 'min:10', 'regex:/^([0-9\s\-\+\(\)]*)$/'],
             'email' => ['required', 'email', 'min:5', 'max:64', function ($attribute, $value, $fail) {
                 if (! is_null($this->request->get('help'))) {
-                    $resourceTypes = ResourceType::whereIn('id', $this->request->get('help'))
+                    $resourceTypes = ResourceType::whereIn('id', Arr::wrap($this->request->get('help')))
                         ->get()
                         ->pluck('name')
                         ->toArray();
