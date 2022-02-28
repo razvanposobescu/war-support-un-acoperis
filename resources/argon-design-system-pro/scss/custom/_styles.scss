@@ -27,7 +27,7 @@ body {
 
 body {
     font-family: 'Titillium Web', sans-serif;
-    color:$custom-gray;
+    color:$dark-gray;
 }
 
 .navbar-light {
@@ -311,7 +311,7 @@ label.required {
 }
 
 .alert-general {
-    color:$custom-gray;
+    color:$dark-gray;
 }
 
 .table {
@@ -427,7 +427,7 @@ label.required {
 }
 
 .form-control, .form-control:focus {
-    color:#4e5967;
+    color:#131313;
 }
 
 .modal-header {
@@ -524,8 +524,7 @@ label.required {
 }
 
 .bg-h4h-form {
-    background-image: url("/images/form-background.jpg");
-    background-size: cover;
+    background-color: #F5F5F5;
 }
 
 .bg-gray-100 {
@@ -541,7 +540,7 @@ label.required {
     font-family: "Titillium Web", sans-serif;
     font-weight: 600;
     font-size: 36px;
-    color: #1C1080;
+    color: $indigo;
 }
 
 .form-description p{
@@ -551,7 +550,7 @@ label.required {
 }
 
 .form-info-stripe{
-    background-color: #DFF2E3;
+    background-color: $light-green;
 }
 
 @media (min-width: 576px){

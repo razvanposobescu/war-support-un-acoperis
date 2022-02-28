@@ -12,8 +12,6 @@
                                         @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
                                 <div class="col-sm-6">
                                     <div><label class="required font-weight-600" for="phone">{{ __("Phone Number") }}:</label></div>
                                     <input type="tel" placeholder="0742000000" class="form-control @error('phone') is-invalid @enderror" name="phone" id="phone" value="{{ old('phone') }}" />
@@ -21,6 +19,8 @@
                                     <span class="invalid-feedback" role="alert">{{ $message }}</span>
                                     @enderror
                                 </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
                                         <label class="required font-weight-600" for="email">{{ __("E-Mail Address") }}:</label>
@@ -55,7 +55,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group">
                                                 <label class="required font-weight-600" for="county_id">{{ __('County') }}:</label>
-                                                <select name="county_id" id="county_id" class="custom-select form-control @error('county') is-invalid @enderror">
+                                                <select name="county_id" id="county_id" class="custom-select form-control @error('county_id') is-invalid @enderror">
                                                     <option>{{ __("Select county") }}</option>
                                                     @foreach ($counties as $county)
                                                         <option value="{{ $county->id }}"{{ old('county_id') == $county->id ? ' selected' : '' }}>{{ $county->name }}</option>
