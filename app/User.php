@@ -86,7 +86,6 @@ class User extends Authenticatable implements Auditable
     /**
      * @return bool
      */
-
     public function isAuthorized($role): bool
     {
         return $this->hasRole($role) && $this->approved_at;

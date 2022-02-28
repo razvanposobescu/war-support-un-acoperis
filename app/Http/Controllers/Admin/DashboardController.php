@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\HelpRequestType;
 use App\Http\Controllers\Controller;
+use App\Services\NavigationService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;

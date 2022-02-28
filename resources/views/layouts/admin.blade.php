@@ -79,7 +79,7 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @if (Auth::user()->isAdministrator())
+                                @if (Auth::user()->isAuthorized(App\User::ROLE_ADMINISTRATOR))
                                     <a class="dropdown-item" href="{{ route('admin.profile') }}">
                                         {{ __('My Profile') }}
                                     </a>
@@ -117,38 +117,20 @@
         <div class="d-flex">
             <div class="sidebar border-right">
                 <div class="list-group list-group-flush mt-2 mt-sm-4">
-                @if (Auth::user()->isAdministrator(App\User::ROLE_ADMINISTRATOR))
-                    <a href="{{ route('admin.dashboard') }}" class="list-group-item list-group-item-action {{ Route::currentRouteName() == 'admin.dashboard' ? 'active' : '' }}">
-                        <i class="fa fa-bar-chart mr-3"></i>Dashboard
-                    </a>
-                    <!-- New buttons, routes need to be added, and also active checks, like for Dashboard -->
-                    <a href="#" class="list-group-item list-group-item-action ">
-                        <i class="fa fa-bed mr-3"></i>Oferte cazări
-                    </a>
-                        <a href="#" class="list-group-item list-group-item-action sub-list ">
-                            <i class="fa fa-minus mx-3"></i>Aprobate
-                        </a>
-                        <a href="#" class="list-group-item list-group-item-action sub-list ">
-                            <i class="fa fa-minus mx-3"></i>În curs de aprobare
-                        </a>
-                    <a href="#" class="list-group-item list-group-item-action ">
-                        <img src="/images/hand-icon.svg" class="mr-3">Solicitări cazări
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action ">
-                        <i class="fa fa-users mr-3"></i>Utilizatori
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action ">
-                        <i class="fa fa-bell mr-3"></i>Notificări
-                    </a>
-                    <!-- New buttons end -->
-                @elseif (Auth::user()->isHost())
-                    <a href="{{ route('host.profile') }}" class="list-group-item list-group-item-action {{ in_array(Route::currentRouteName(), ['host.profile', 'host.edit-profile', 'host.reset-password']) ? 'active' : '' }}">
-                        <i class="fa fa-user mr-3"></i>Profilul meu
-                    </a>
-                    <a href="{{ route('host.accommodation') }}" class="list-group-item list-group-item-action {{ in_array(Route::currentRouteName(), ['host.accommodation', 'host.add-accommodation', 'host.view-accommodation', 'host.edit-accommodation']) ? 'active' : '' }}">
-                        <i class="fa fa-user mr-3"></i>Cazare
-                    </a>
-                @endif
+                    @switch(true)
+                        @case (Auth::user()->isAuthorized(App\User::ROLE_ADMINISTRATOR))
+                            @include('partials.admin.menus.administrator')
+                        @break
+                        @case (Auth::user()->isAuthorized(App\User::ROLE_HOST)):
+                            @include('partials.admin.menus.host')
+                        @break
+                        @case (Auth::user()->isAuthorized(App\User::ROLE_REFUGEE)):
+                            @include('partials.admin.menus.refugee')
+                        @break
+                        @case (Auth::user()->isAuthorized(App\User::ROLE_TRUSTED)):
+                            @include('partials.admin.menus.trusted')
+                        @break
+                    @endswitch
                 </div>
                 <!-- New buttons, routes need to be added, and also active checks, like for Dashboard -->
                 <div class="list-group list-group-flush list-group-bottom mt-2 mt-sm-4 pb-5">
@@ -159,7 +141,7 @@
                         <i class="fa fa-user mr-3"></i>Contul meu
                     </a>
                     <a href="{{ route('logout') }}" class="list-group-item list-group-item-action "
-                        onclick="event.preventDefault(); 
+                        onclick="event.preventDefault();
                         document.getElementById('logout-form').submit();">
                         <i class="fa fa-power-off mr-3"></i>Ieși din cont
                     </a>

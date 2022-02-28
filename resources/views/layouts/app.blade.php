@@ -159,22 +159,21 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                @if (Auth::user()->isAdministrator())
-                                <a class="dropdown-item" href="{{ route('admin.dashboard', ['locale' => app()->getLocale()]) }}">
-                                    <i class="fa fa-wrench"></i> {{ __('Administration Panel') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('admin.profile') }}">
-                                    {{ __('My Profile') }}
-                                </a>
-                                @elseif (Auth::user()->isHost())
-                                <a class="dropdown-item" href="{{ route('host.profile', ['locale' => app()->getLocale()]) }}">
-                                    <i class="fa fa-wrench"></i> {{ __('Administration Panel') }}
-                                </a>
-                                <a class="dropdown-item" href="{{ route('host.profile') }}">
-                                    {{ __('My Profile') }}
-                                </a>
-                                @endif
 
+                                @switch(true)
+                                    @case (Auth::user()->isAuthorized(App\User::ROLE_ADMINISTRATOR)):
+                                        @include('partials.menus.administrator')
+                                    @break
+                                    @case (Auth::user()->isAuthorized(App\User::ROLE_HOST)):
+                                        @include('partials.menus.host')
+                                    @break
+                                    @case (Auth::user()->isAuthorized(App\User::ROLE_REFUGEE)):
+                                        @include('partials.menus.refugee')
+                                    @break
+                                    @case (Auth::user()->isAuthorized(App\User::ROLE_TRUSTED)):
+                                        @include('partials.menus.trusted')
+                                    @break
+                                @endswitch
 
                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

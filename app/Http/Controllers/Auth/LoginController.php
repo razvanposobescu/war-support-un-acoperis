@@ -39,11 +39,10 @@ class LoginController extends Controller
      */
     public function redirectPath()
     {
-        /** @var User $user */
-        $user = Auth::user();
-
-        if ($user->isAdministrator()) {
+        if ($user->isAdministrator())
+        {
             return route('admin.dashboard');
+
         } else if ($user->isHost()) {
             return route('host.profile');
         }
